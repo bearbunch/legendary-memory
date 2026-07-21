@@ -12,15 +12,15 @@ async fetch(request, env) {
 const url = new URL(request.url);
 
 
+console.log(
+    request.method,
+    url.pathname
+);
 
-/*
- API ROUTES
-*/
 
 
 if(
 url.pathname === "/api/auth/register"
-&& request.method === "POST"
 ){
 
 return register(
@@ -34,7 +34,6 @@ env
 
 if(
 url.pathname === "/api/auth/login"
-&& request.method === "POST"
 ){
 
 return login(
@@ -46,12 +45,12 @@ env
 
 
 
-/*
- WEBSITE FILES
-*/
-
-
-return env.ASSETS.fetch(request);
+return new Response(
+"API running",
+{
+status:200
+}
+);
 
 
 }
