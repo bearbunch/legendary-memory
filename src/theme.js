@@ -1,24 +1,34 @@
 const themeSelect = document.getElementById("themeSelect");
+const favicon = document.getElementById("favicon");
 
 
-// Apply selected theme
-function applyTheme(theme) {
+
+function updateFavicon(theme) {
+
+    let currentTheme = theme;
+
 
     if (theme === "system") {
 
-        const isDark = window.matchMedia(
+        currentTheme =
+        window.matchMedia(
             "(prefers-color-scheme: dark)"
-        ).matches;
+        ).matches
+        ? "dark"
+        : "light";
+
+    }
 
 
-        document.documentElement.dataset.theme =
-            isDark ? "dark" : "light";
+    if (currentTheme === "dark") {
 
-    } 
-    
-    else {
+        favicon.href =
+        "src/icons/dark.ico";
 
-        document.documentElement.dataset.theme = theme;
+    } else {
+
+        favicon.href =
+        "src/icons/light.ico";
 
     }
 
@@ -26,17 +36,54 @@ function applyTheme(theme) {
 
 
 
-// Load saved theme
+
+function applyTheme(theme) {
+
+
+    if (theme === "system") {
+
+
+        const dark =
+        window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        ).matches;
+
+
+        document.documentElement.dataset.theme =
+        dark ? "dark" : "light";
+
+
+    } 
+    
+    else {
+
+
+        document.documentElement.dataset.theme =
+        theme;
+
+
+    }
+
+
+    updateFavicon(theme);
+
+}
+
+
+
 
 const savedTheme =
-    localStorage.getItem("mychat-theme") || "system";
+localStorage.getItem("mychat-theme")
+|| "system";
 
 
-if (themeSelect) {
+
+if(themeSelect){
 
     themeSelect.value = savedTheme;
 
 }
+
 
 
 applyTheme(savedTheme);
@@ -44,50 +91,51 @@ applyTheme(savedTheme);
 
 
 
-// Theme selector
 
-if (themeSelect) {
+if(themeSelect){
 
-    themeSelect.addEventListener(
-        "change",
-        () => {
-
-            const theme = themeSelect.value;
+themeSelect.addEventListener(
+"change",
+()=>{
 
 
-            localStorage.setItem(
-                "mychat-theme",
-                theme
-            );
+    const theme =
+    themeSelect.value;
 
 
-            applyTheme(theme);
-
-        }
+    localStorage.setItem(
+        "mychat-theme",
+        theme
     );
+
+
+    applyTheme(theme);
+
+
+});
+
 
 }
 
 
 
-// Detect system theme changes
+
 
 window
 .matchMedia("(prefers-color-scheme: dark)")
 .addEventListener(
-    "change",
-    () => {
+"change",
+()=>{
 
 
-        if (
-            localStorage.getItem("mychat-theme")
-            === "system"
-        ) {
+    if(
+    localStorage.getItem("mychat-theme")
+    === "system"
+    ){
 
-            applyTheme("system");
-
-        }
-
+        applyTheme("system");
 
     }
-);
+
+
+});
