@@ -1,0 +1,19 @@
+name = "mychat-api"
+
+main = "index.js"
+
+compatibility_date = "2026-07-21"
+
+
+[[d1_databases]]
+
+binding = "DB"
+
+database_name = "mychat-db"
+
+database_id = "256577e3-cf21-4dd2-bccf-2f9d92655491"
+
+
+[assets]
+
+directory = "../"
